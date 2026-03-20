@@ -5,9 +5,6 @@ on:
     tags:
       - "v*"
 
-#permissions:
-#  contents: write
-
 jobs:
   build-and-release:
     runs-on: ubuntu-24.04
@@ -15,7 +12,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build static binary
-        run: bash build_static.sh
+        run: |
+          bash build_static.sh
+          mv sutatikku sutatikku-x86_64
 
       - name: Determine version
         id: version
@@ -27,4 +26,4 @@ jobs:
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           generate_release_notes: true
-          files: sutatikku
+          files: sutatikku-x86_64
